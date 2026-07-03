@@ -7,6 +7,9 @@ name: "vinicator"
 #author
 author: "Vini230909"
 
+#github repository, used for in-game update checks and reinstalls
+repo: "Vini230909/Vinicator"
+
 #the fully qualified main class of the mod
 main: "vinicator.VinicatorMod"
 
