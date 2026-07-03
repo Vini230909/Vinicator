@@ -16,7 +16,7 @@ public class VinicatorSettings{
         excludedKey = "vinicator-excluded";
 
     public static final int defaultRange = 15, defaultOpacity = 0;
-    public static final int modePlayer = 0, modeCursor = 1, modeCamera = 2;
+    public static final int modePlayer = 0, modeCursor = 1, modeCamera = 2, modeAll = 3;
 
     /** Names of unit types the player chose NOT to hide; every other type is affected.
      * Storing exclusions means newly added (or modded) unit types are hidden by default. */

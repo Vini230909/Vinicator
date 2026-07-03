@@ -28,7 +28,9 @@ public class VinicatorRenderer{
 
     /** Units removed from the draw group this frame. */
     private final Seq<Unit> faded = new Seq<>();
-    private final Vec2 anchor = new Vec2();
+    /** Anchor points active this frame; more than one in "all" mode. */
+    private final Seq<Vec2> anchors = new Seq<>();
+    private final Vec2 playerAnchor = new Vec2(), cursorAnchor = new Vec2(), cameraAnchor = new Vec2();
 
     private FrameBuffer buffer;
     private AlphaShader shader;
@@ -42,15 +44,18 @@ public class VinicatorRenderer{
         //if the previous frame ended abnormally and postDraw never ran, put units back now
         restore();
 
-        if(!VinicatorSettings.enabled() || !state.isGame() || !findAnchor(anchor)) return;
+        if(!VinicatorSettings.enabled() || !state.isGame()) return;
+
+        findAnchors();
+        if(anchors.isEmpty()) return;
 
         float range = VinicatorSettings.range() * tilesize;
         Unit ownUnit = player.unit();
 
         Groups.unit.each(unit ->
             unit != ownUnit
-            && unit.within(anchor.x, anchor.y, range)
-            && VinicatorSettings.affects(unit.type),
+            && VinicatorSettings.affects(unit.type)
+            && withinAnyAnchor(unit, range),
         faded::add);
 
         if(faded.isEmpty()) return;
@@ -95,18 +100,30 @@ public class VinicatorRenderer{
         faded.clear();
     }
 
-    /** @return whether an anchor point exists for the current mode; result is stored in {@code out}. */
-    private boolean findAnchor(Vec2 out){
-        switch(VinicatorSettings.mode()){
-            case VinicatorSettings.modeCursor -> out.set(input.mouseWorld());
-            case VinicatorSettings.modeCamera -> out.set(camera.position);
-            default -> {
-                Unit unit = player.unit();
-                if(unit == null || unit.dead || !unit.isAdded()) return false;
-                out.set(unit.x, unit.y);
+    /** Collects the anchor points active for the current mode into {@link #anchors}. */
+    private void findAnchors(){
+        anchors.clear();
+        int mode = VinicatorSettings.mode();
+
+        if(mode == VinicatorSettings.modePlayer || mode == VinicatorSettings.modeAll){
+            Unit unit = player.unit();
+            if(unit != null && !unit.dead && unit.isAdded()){
+                anchors.add(playerAnchor.set(unit.x, unit.y));
             }
         }
-        return true;
+        if(mode == VinicatorSettings.modeCursor || mode == VinicatorSettings.modeAll){
+            anchors.add(cursorAnchor.set(input.mouseWorld()));
+        }
+        if(mode == VinicatorSettings.modeCamera || mode == VinicatorSettings.modeAll){
+            anchors.add(cameraAnchor.set(camera.position));
+        }
+    }
+
+    private boolean withinAnyAnchor(Unit unit, float range){
+        for(Vec2 anchor : anchors){
+            if(unit.within(anchor.x, anchor.y, range)) return true;
+        }
+        return false;
     }
 
     /** Draws a fullscreen buffer multiplied by a constant alpha. */

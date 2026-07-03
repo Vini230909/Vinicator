@@ -25,7 +25,7 @@ public class VinicatorMod extends Mod{
 
             ui.settings.addCategory(bundle.get("vinicator.category"), Icon.eyeSmall, table -> {
                 table.checkPref(VinicatorSettings.enabledKey, false);
-                table.sliderPref(VinicatorSettings.modeKey, VinicatorSettings.modePlayer, 0, 2, 1, i -> bundle.get("vinicator.mode." + i));
+                table.sliderPref(VinicatorSettings.modeKey, VinicatorSettings.modePlayer, 0, 3, 1, i -> bundle.get("vinicator.mode." + i));
                 table.sliderPref(VinicatorSettings.rangeKey, VinicatorSettings.defaultRange, 1, 100, 1, i -> bundle.format("vinicator.tiles", i));
                 table.sliderPref(VinicatorSettings.opacityKey, VinicatorSettings.defaultOpacity, 0, 100, 5, i -> i + "%");
                 table.pref(new Setting(VinicatorSettings.unitsKey){

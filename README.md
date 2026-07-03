@@ -6,10 +6,11 @@ A client-side Mindustry (v8, build 158+) Java mod that **hides or fades units ne
 
 ## Features
 
-- Hides units within a configurable range (1–100 tiles) of an **anchor point**. Three anchor modes:
+- Hides units within a configurable range (1–100 tiles) of an **anchor point**. Four anchor modes:
   - **Player unit** — units near the unit you control
   - **Mouse cursor** — units near your crosshair
   - **Camera center** — units near the middle of your screen
+  - **All of the above** — units near any of the three at once
 - **Opacity slider**: 0% removes units in range entirely; higher values draw them as transparent ghosts. Body, shields, engines and trails all fade together.
 - **Unit type picker**: a dialog with every unit type as a toggleable icon (select all / clear). New and modded unit types are affected by default.
 - Your own controlled unit is never hidden.
