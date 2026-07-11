@@ -17,7 +17,7 @@ main: "hideunits.HideUnitsMod"
 description: "Hides or fades units near your player, cursor, or camera so you can see the blocks underneath. Configure range, opacity and affected unit types in Settings > Hide-Units."
 
 #the mod version
-version: 1.0
+version: 1.1
 
 #the minimum game build required to run this mod
 minGameVersion: 158

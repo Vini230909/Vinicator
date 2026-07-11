@@ -27,8 +27,8 @@ jobs:
       uses: actions/upload-artifact@v7
       with:
         archive: false
-        name: ${{ github.event.repository.name }}
-        path: build/libs/${{ github.event.repository.name }}.jar
+        name: Hide-Units
+        path: build/libs/Hide-Units.jar
     # Mindustry's "import mod from GitHub" feature for Java mods downloads the jar
     # asset of the repo's latest release, so keep a rolling release up to date.
     - name: Update rolling release for in-game import
@@ -38,4 +38,4 @@ jobs:
         tag_name: latest
         name: Latest build
         body: Automatic build of the newest commit. In Mindustry, use Mods → Import mod → GitHub repository → `Vini230909/Hide-Units`.
-        files: build/libs/${{ github.event.repository.name }}.jar
+        files: build/libs/Hide-Units.jar
