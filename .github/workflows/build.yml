@@ -37,5 +37,5 @@ jobs:
       with:
         tag_name: latest
         name: Latest build
-        body: Automatic build of the newest commit. In Mindustry, use Mods → Import mod → GitHub repository → `Vini230909/Vinicator`.
+        body: Automatic build of the newest commit. In Mindustry, use Mods → Import mod → GitHub repository → `Vini230909/Hide-Units`.
         files: build/libs/${{ github.event.repository.name }}.jar

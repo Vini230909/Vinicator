@@ -1,20 +1,20 @@
 #the mod name as displayed in-game
-displayName: "Hide Units"
+displayName: "Hide-Units"
 
 #the internal name of the mod
-name: "Hideyourunit"
+name: "hide-units"
 
 #author
 author: "Vini230909"
 
 #github repository, used for in-game update checks and reinstalls
-repo: "Vini230909/Vinicator"
+repo: "Vini230909/Hide-Units"
 
 #the fully qualified main class of the mod
-main: "vinicator.VinicatorMod"
+main: "hideunits.HideUnitsMod"
 
 #the mod description as seen in the mod dialog
-description: "Hides or fades units near your player, cursor, or camera so you can see what's underneath. Configure range, opacity and affected unit types in Settings > Vinicator."
+description: "Hides or fades units near your player, cursor, or camera so you can see the blocks underneath. Configure range, opacity and affected unit types in Settings > Hide-Units."
 
 #the mod version
 version: 1.0

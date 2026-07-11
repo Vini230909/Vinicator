@@ -1,62 +1,70 @@
-# Vinicator
-
-A client-side Mindustry (v8, build 158+) Java mod that **hides or fades units near you**, so you can actually see the blocks underneath. Inspired by the "hide units" feature of [foo's client](https://github.com/mindustry-antigrief/mindustry-client), but range-based and configurable per unit type — and usable as a regular mod instead of a custom client.
+# Hide-Units
 
 ![icon](icon.png)
 
-## Features
+### Your base is beautiful. You just can't see it.
 
-- Hides units within a configurable range (1–100 tiles) of an **anchor point**. Four anchor modes:
-  - **Player unit** — units near the unit you control
-  - **Mouse cursor** — units near your crosshair
-  - **Camera center** — units near the middle of your screen
-  - **All of the above** — units near any of the three at once
-- **Opacity slider**: 0% removes units in range entirely; higher values draw them as transparent ghosts. Body, shields, engines and trails all fade together.
-- **Unit type picker**: a dialog with every unit type as a toggleable icon (select all / clear). New and modded unit types are affected by default.
-- Your own controlled unit is never hidden.
-- Purely visual and client-side (`hidden: true`): units still exist, shoot and collide normally, and the mod is not required on servers you join.
+Fifty flares parked on your core. A wall of mono spam over the drill grid you're trying to rebuild. That one poly that has decided your cursor is its home. You know the block is *right there* — you just can't click it.
 
-## Usage
+**Hide-Units makes them get out of the way.**
 
-Everything lives in **Settings → Vinicator**:
+Units near you fade out or vanish completely, so the factory underneath them comes back into view. Move away, they come back. That's it. No more zooming in, no more guessing, no more misclicking a unit instead of the conveyor you meant.
 
-1. Toggle **Hide units near anchor** on.
-2. Pick the **Anchor mode**, **Hide range**, and **Hidden unit opacity**.
-3. Open **Unit types...** to choose which units are affected.
+---
 
-## Installation
+## What it does
 
-Grab `Vinicator.jar` from the [releases](../../releases) (or build it yourself, below) and either:
+**🎯 Hides only what's in your way.** Units are hidden inside a radius around an anchor point — not everywhere. The rest of the map stays exactly as it should be, so you keep your situational awareness while the clutter right in front of you disappears.
 
-- import it in-game via **Mods → Import mod → Import file**, or
-- drop it into your Mindustry `mods` folder.
+**📍 Pick your anchor.** Four modes:
+- **Player unit** — clears the crowd that follows you around
+- **Mouse cursor** — a bubble of clean vision that follows your crosshair
+- **Camera center** — cleans up whatever you're looking at
+- **All of the above** — for when you want all three at once
+
+**🔧 Set your range.** 1 to 100 tiles. A tight 5-tile cursor bubble for surgical building, or a wide 60-tile dome to blank out a whole battlefront.
+
+**👻 Ghosts, not just invisibility.** Slide the opacity from 0% (units simply aren't there) up to a translucent ghost that lets you see *through* your army instead of losing it. Bodies, shields, engines and trails all fade together — no ugly leftovers floating around.
+
+**🦾 Choose your victims.** A full unit-type picker with every unit in the game as a clickable icon. Hide the flying spam but keep the enemy ground push visible. Hide everything except crawlers. Whatever you want — select all, clear all, or hand-pick. Units from other mods show up in the list too.
+
+**🛡️ Your own unit is never hidden.** You'll always know where you are.
+
+---
+
+## Play anywhere with it
+
+Hide-Units is **purely visual and 100% client-side**. Units still exist, still shoot, still block, still get shot. Nothing about the game changes — only what your eyes have to deal with.
+
+That means the mod is **not required on servers**. Install it, join any server you like, and nobody else even knows it's there. No "mod mismatch", no kicked-on-join, no asking the host to install anything.
+
+Inspired by the hide-units feature from foo's client — except you don't have to replace your whole game with a custom client to get it. It's just a mod.
+
+---
+
+## Using it
+
+Everything is in **Settings → Hide-Units**:
+
+1. Flip on **Hide units near anchor**.
+2. Choose your **Anchor mode**, **Hide range** and **Hidden unit opacity**.
+3. Open **Unit types...** and pick which units get hidden.
+
+Change any of it mid-game — it takes effect the moment you close the menu.
+
+---
+
+## Small print
 
 Requires Mindustry **build 158 or newer**.
 
-## Building
+A few honest quirks with the ghost (non-zero opacity) mode:
+- Faded units all draw at one layer, so a ghosted ground unit may appear on top of effects that would normally cover it.
+- Shield bubbles on faded units render as plain shapes instead of the fancy animated shield.
+- Player name tags stay visible even when that player's unit is faded — the tag belongs to the player, not the unit.
 
-Desktop-only jar (no Android SDK needed):
+Set opacity to 0% and none of that applies: the units are just gone.
 
-```
-./gradlew jar
-```
+---
 
-Output: `build/libs/VinicatorDesktop.jar`
-
-Combined desktop + Android jar (requires an Android SDK with `d8` on your PATH and `ANDROID_HOME` set):
-
-```
-./gradlew deploy
-```
-
-Output: `build/libs/Vinicator.jar` — this is the one that works on all platforms. The included GitHub Actions workflow builds it automatically on every push.
-
-## How it works
-
-Each frame, units in range are removed from the draw entity group right before the vanilla renderer iterates it (`Trigger.draw`) and put back immediately after (`Trigger.postDraw`) — game logic never notices. When opacity is above 0%, those units are instead drawn into an offscreen framebuffer which is blitted over the scene with a constant-alpha shader, the same capture-and-blit pattern the vanilla renderer uses for animated shields.
-
-## Known quirks
-
-- Faded ghosts render at a single layer (just above flying units), so a faded ground unit may draw over bullets/effects that would normally cover it.
-- Shield bubbles of faded units render as simple shapes rather than with the animated shield shader.
-- Player name tags belong to the player, not the unit, so they stay visible when a player's unit is faded.
+*Made by Vini230909. Free, open source, and it will never ask you for anything.*

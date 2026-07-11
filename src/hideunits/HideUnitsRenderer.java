@@ -1,4 +1,4 @@
-package vinicator;
+package hideunits;
 
 import arc.*;
 import arc.graphics.*;
@@ -22,7 +22,7 @@ import static mindustry.Vars.*;
  * framebuffer which is then blitted over the screen with the chosen alpha — the same
  * capture-and-blit pattern the vanilla renderer uses for animated shields.
  */
-public class VinicatorRenderer{
+public class HideUnitsRenderer{
     /** Z layer the faded units are drawn at: above flying units, below the overlay UI. */
     public static final float fadeLayer = Layer.flyingUnit + 1f;
 
@@ -35,7 +35,7 @@ public class VinicatorRenderer{
     private FrameBuffer buffer;
     private AlphaShader shader;
 
-    public VinicatorRenderer(){
+    public HideUnitsRenderer(){
         Events.run(Trigger.draw, this::draw);
         Events.run(Trigger.postDraw, this::restore);
     }
@@ -44,17 +44,17 @@ public class VinicatorRenderer{
         //if the previous frame ended abnormally and postDraw never ran, put units back now
         restore();
 
-        if(!VinicatorSettings.enabled() || !state.isGame()) return;
+        if(!HideUnitsSettings.enabled() || !state.isGame()) return;
 
         findAnchors();
         if(anchors.isEmpty()) return;
 
-        float range = VinicatorSettings.range() * tilesize;
+        float range = HideUnitsSettings.range() * tilesize;
         Unit ownUnit = player.unit();
 
         Groups.unit.each(unit ->
             unit != ownUnit
-            && VinicatorSettings.affects(unit.type)
+            && HideUnitsSettings.affects(unit.type)
             && withinAnyAnchor(unit, range),
         faded::add);
 
@@ -64,7 +64,7 @@ public class VinicatorRenderer{
             Groups.draw.remove(unit);
         }
 
-        float opacity = VinicatorSettings.opacity();
+        float opacity = HideUnitsSettings.opacity();
         if(opacity <= 0.001f) return;
 
         if(buffer == null){
@@ -103,18 +103,18 @@ public class VinicatorRenderer{
     /** Collects the anchor points active for the current mode into {@link #anchors}. */
     private void findAnchors(){
         anchors.clear();
-        int mode = VinicatorSettings.mode();
+        int mode = HideUnitsSettings.mode();
 
-        if(mode == VinicatorSettings.modePlayer || mode == VinicatorSettings.modeAll){
+        if(mode == HideUnitsSettings.modePlayer || mode == HideUnitsSettings.modeAll){
             Unit unit = player.unit();
             if(unit != null && !unit.dead && unit.isAdded()){
                 anchors.add(playerAnchor.set(unit.x, unit.y));
             }
         }
-        if(mode == VinicatorSettings.modeCursor || mode == VinicatorSettings.modeAll){
+        if(mode == HideUnitsSettings.modeCursor || mode == HideUnitsSettings.modeAll){
             anchors.add(cursorAnchor.set(input.mouseWorld()));
         }
-        if(mode == VinicatorSettings.modeCamera || mode == VinicatorSettings.modeAll){
+        if(mode == HideUnitsSettings.modeCamera || mode == HideUnitsSettings.modeAll){
             anchors.add(cameraAnchor.set(camera.position));
         }
     }

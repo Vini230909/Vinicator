@@ -1,19 +1,19 @@
-package vinicator;
+package hideunits;
 
 import arc.struct.*;
 import mindustry.type.*;
 
 import static arc.Core.*;
 
-/** Reads and writes all Vinicator settings through {@link arc.Core#settings}. */
-public class VinicatorSettings{
+/** Reads and writes all Hide-Units settings through {@link arc.Core#settings}. */
+public class HideUnitsSettings{
     public static final String
-        enabledKey = "vinicator-enabled",
-        modeKey = "vinicator-mode",
-        rangeKey = "vinicator-range",
-        opacityKey = "vinicator-opacity",
-        unitsKey = "vinicator-units",
-        excludedKey = "vinicator-excluded";
+        enabledKey = "hideunits-enabled",
+        modeKey = "hideunits-mode",
+        rangeKey = "hideunits-range",
+        opacityKey = "hideunits-opacity",
+        unitsKey = "hideunits-units",
+        excludedKey = "hideunits-excluded";
 
     public static final int defaultRange = 15, defaultOpacity = 0;
     public static final int modePlayer = 0, modeCursor = 1, modeCamera = 2, modeAll = 3;
